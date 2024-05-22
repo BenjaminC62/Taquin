@@ -54,7 +54,11 @@ public class TaquinApplication extends Application {
         stage.setTitle("Taquin");
 
         // On crée enfin le jeu, et on l'associe au contrôleur.
-        // TODO Créez et initialisez ici le contrôler et la partie de Taquin.
+        TaquinController controller = fxmlLoader.getController();
+        Taquin taquin = new Taquin(4);
+        taquin.setController(controller);
+        controller.setModel(taquin);
+        taquin.startGame();
 
         // Enfin, on affiche la fenêtre.
         stage.show();

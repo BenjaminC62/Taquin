@@ -59,6 +59,7 @@ public class TaquinApplication extends Application {
         taquin.setController(controller);
         controller.setModel(taquin);
         taquin.startGame();
+        controller.setScene(scene);
 
         // Enfin, on affiche la fenêtre.
         stage.show();

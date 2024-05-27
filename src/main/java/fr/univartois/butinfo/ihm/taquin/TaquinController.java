@@ -18,10 +18,15 @@ package fr.univartois.butinfo.ihm.taquin;
 
 import java.net.URL;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -44,6 +49,25 @@ public class TaquinController {
      */
     @FXML
     private Label nbMoves;
+
+    private Scene scene;
+
+    public void setScene(Scene scene){
+        this.scene = scene;
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
+            if(e.getCode() == KeyCode.UP){
+                taquin.pushUp();
+            } else if (e.getCode() == KeyCode.DOWN) {
+                taquin.pushDown();
+            } else if (e.getCode() == KeyCode.LEFT) {
+                taquin.pushLeft();
+            } else if (e.getCode() == KeyCode.RIGHT) {
+                taquin.pushRight();
+            }
+
+            e.consume();
+        });
+    }
 
     /**
      * La grille affichant les boutons permettant de jouer au Taquin.
@@ -76,7 +100,21 @@ public class TaquinController {
      * @param grid La grille du jeu.
      */
     public void initGrid(Grid grid) {
-        // TODO Créez vos boutons dans cette méthode.
+        buttons = new Button[grid.size()][grid.size()];
+        for (int i = 0; i < grid.size(); i++) {
+            for (int j = 0; j < grid.size(); j++) {
+                final int x = i;
+                final int y = j;
+
+                buttons[i][j] = new Button(Integer.toString(grid.get(i,j).getValue()));
+                buttons[i][j].setPrefSize(100, 100);
+                buttons[i][j].setFont(javafx.scene.text.Font.font(20));
+                buttons[i][j].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
+                    taquin.push(x, y);
+                });
+                gridPane.add(buttons[i][j], j, i);
+            }
+        }
     }
 
     /**
@@ -84,8 +122,8 @@ public class TaquinController {
      *
      * @param nb Le nombre de déplacements.
      */
-    public void updateMoves(int nb) {
-        this.nbMoves.setText(Integer.toString(nb));
+    public void updateMoves(IntegerProperty nb) {
+        this.nbMoves.textProperty().bind(nb.asString());
     }
 
     /**

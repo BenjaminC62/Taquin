@@ -16,6 +16,9 @@
 
 package fr.univartois.butinfo.ihm.taquin;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * La classe Taquin fournit toutes les méthodes nécessaires pour gérer une partie du jeu
  * du Taquin.
@@ -34,7 +37,7 @@ public class Taquin {
     /**
      * Le nombre de déplacements réalisés sur la grille.
      */
-    private int nbMoves;
+    private final IntegerProperty nbMoves;
 
     /**
      * Le contrôleur de l'application, permettant de maintenir l'affichage à jour.
@@ -47,7 +50,7 @@ public class Taquin {
      * @param size La taille de la grille sur laquelle le jeu se déroule.
      */
     public Taquin(int size) {
-        this.nbMoves = 0;
+        this.nbMoves = new SimpleIntegerProperty(0);
         this.grid = new Grid(size);
     }
 
@@ -133,9 +136,8 @@ public class Taquin {
      * Valide le dernier déplacement demandé par l'utilisateur.
      */
     private void acceptMove() {
-        nbMoves++;
+        nbMoves.set(nbMoves.get()+1);
 
-        controller.updateMoves(nbMoves);
         controller.updateGrid(grid);
 
         if (grid.isOrdered()) {
@@ -148,7 +150,7 @@ public class Taquin {
      */
     public void restartGame() {
         grid.reset();
-        nbMoves = 0;
+        nbMoves.set(0);
         startGame();
     }
 

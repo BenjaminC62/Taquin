@@ -16,6 +16,9 @@
 
 package fr.univartois.butinfo.ihm.taquin;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 /**
  * La classe Tile représente une tuile de la grille du jeu du Taquin.
  *
@@ -28,7 +31,7 @@ public class Tile {
     /**
      * La valeur de cette tuile.
      */
-    private int value;
+    private final IntegerProperty value;
 
     /**
      * Construit une nouvelle instance de Tile.
@@ -36,7 +39,7 @@ public class Tile {
      * @param value La valeur initiale de la tuile.
      */
     public Tile(int value) {
-        this.value = value;
+        this.value = new SimpleIntegerProperty(value);
     }
 
     /**
@@ -45,7 +48,7 @@ public class Tile {
      * @param value La nouvelle valeur de la tuile.
      */
     public void setValue(int value) {
-        this.value = value;
+        this.value.set(value);
     }
 
     /**
@@ -54,8 +57,14 @@ public class Tile {
      * @return La valeur de cette tuile.
      */
     public int getValue() {
+        return value.get();
+    }
+
+    public IntegerProperty getValueProperty() {
         return value;
     }
+
+
 
     /**
      * Échange la valeur de cette tuile avec celle d'une tuile donnée.

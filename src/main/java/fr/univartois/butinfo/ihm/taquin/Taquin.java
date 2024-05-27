@@ -80,7 +80,6 @@ public class Taquin {
     public void startGame() {
         grid.shuffle();
         controller.updateMoves(nbMoves);
-        controller.updateGrid(grid);
         controller.startGame();
     }
 
@@ -137,8 +136,6 @@ public class Taquin {
      */
     private void acceptMove() {
         nbMoves.set(nbMoves.get()+1);
-
-        controller.updateGrid(grid);
 
         if (grid.isOrdered()) {
             controller.endGame();

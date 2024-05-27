@@ -107,6 +107,7 @@ public class TaquinController {
                 final int y = j;
 
                 buttons[i][j] = new Button(Integer.toString(grid.get(i,j).getValue()));
+                buttons[i][j].textProperty().bind(grid.get(i,j).getValueProperty().asString());
                 buttons[i][j].setPrefSize(100, 100);
                 buttons[i][j].setFont(javafx.scene.text.Font.font(20));
                 buttons[i][j].addEventFilter(MouseEvent.MOUSE_CLICKED, e -> {
@@ -126,18 +127,6 @@ public class TaquinController {
         this.nbMoves.textProperty().bind(nb.asString());
     }
 
-    /**
-     * Met à jour la grille du Taquin affichée par ce contrôleur.
-     *
-     * @param grid La grille du jeu.
-     */
-    public void updateGrid(Grid grid) {
-        for (int i = 0; i < grid.size(); i++) {
-            for (int j = 0; j < grid.size(); j++) {
-                buttons[i][j].setText(Integer.toString(grid.get(i, j).getValue()));
-            }
-        }
-    }
 
     /**
      * Prépare une nouvelle partie sur la vue.
